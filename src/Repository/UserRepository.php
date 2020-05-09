@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -15,6 +17,12 @@ class UserRepository
     public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
+    }
+
+    public function save(User $user): void
+    {
+        $this->manager->persist($user);
+        $this->manager->flush();
     }
 
     public function getByUsername(string $username): ?User

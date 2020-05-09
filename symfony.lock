@@ -1,4 +1,10 @@
 {
+    "composer/semver": {
+        "version": "1.5.1"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.4.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -90,6 +96,18 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "cc05ab6abf6894bddb9bbd6a252459010ebe040b"
+        },
+        "files": [
+            ".php_cs.dist"
+        ]
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -101,6 +119,9 @@
     },
     "php": {
         "version": "7.3"
+    },
+    "php-cs-fixer/diff": {
+        "version": "v1.3.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -216,6 +237,9 @@
     "symfony/mime": {
         "version": "v5.0.8"
     },
+    "symfony/options-resolver": {
+        "version": "v5.0.8"
+    },
     "symfony/orm-pack": {
         "version": "v1.0.8"
     },
@@ -227,6 +251,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.15.0"
+    },
+    "symfony/process": {
+        "version": "v5.0.8"
     },
     "symfony/property-access": {
         "version": "v5.0.8"

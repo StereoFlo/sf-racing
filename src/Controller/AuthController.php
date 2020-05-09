@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,8 +15,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use function serialize;
 
 class AuthController extends AbstractController
 {
@@ -40,9 +44,9 @@ class AuthController extends AbstractController
         SessionInterface $session,
         EventDispatcherInterface $eventDispatcher)
     {
-        $this->userRepo = $userRepo;
-        $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->userRepo        = $userRepo;
+        $this->tokenStorage    = $tokenStorage;
+        $this->session         = $session;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -57,7 +61,7 @@ class AuthController extends AbstractController
     /**
      * @Route("/login", methods={"POST"}, name="login_process")
      */
-    public function loginProcess(Request $request, PasswordEncoderInterface $passwordEncoder): Response
+    public function loginProcess(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         if (!$this->getUser()) {
             $username = $request->get('username');
@@ -69,7 +73,7 @@ class AuthController extends AbstractController
                 throw new Exception('user does not found');
             }
 
-            if (!$passwordEncoder->isPasswordValid($user->getPassword(), $password, null)) {
+            if (!$passwordEncoder->isPasswordValid($user, $password)) {
                 throw new Exception('password is not valid');
             }
 
@@ -82,5 +86,30 @@ class AuthController extends AbstractController
         }
 
         return $this->redirect('/');
+    }
+
+    /**
+     * @Route("/register", methods={"GET"}, name="register_form")
+     */
+    public function registerForm(): Response
+    {
+        return $this->render('auth/register.html.twig');
+    }
+
+    /**
+     * @Route("/register", methods={"POST"}, name="register_process")
+     */
+    public function registerProcess(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $email    = $request->get('email');
+        $password = $request->get('password');
+        $username = $request->get('username');
+
+        $user = new User('', '', '');
+        $user = new User($email, $passwordEncoder->encodePassword($user, $password), $username);
+
+        $this->userRepo->save($user);
+
+        return $this->redirectToRoute('login_form');
     }
 }
