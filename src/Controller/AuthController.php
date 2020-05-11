@@ -5,19 +5,17 @@ declare(strict_types = 1);
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Mappers\UserMapper;
 use App\Repository\UserRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use function serialize;
+use function md5;
+use function mt_rand;
 
 class AuthController extends AbstractController
 {
@@ -25,43 +23,24 @@ class AuthController extends AbstractController
      * @var UserRepository
      */
     private $userRepo;
+
     /**
-     * @var TokenStorageInterface
+     * @var UserMapper
      */
-    private $tokenStorage;
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private $userMapper;
 
     public function __construct(
         UserRepository $userRepo,
-        TokenStorageInterface $tokenStorage,
-        SessionInterface $session,
-        EventDispatcherInterface $eventDispatcher)
-    {
+        UserMapper $userMapper
+    ) {
         $this->userRepo        = $userRepo;
-        $this->tokenStorage    = $tokenStorage;
-        $this->session         = $session;
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @Route("/login", methods={"GET"}, name="login_form")
-     */
-    public function loginForm(): Response
-    {
-        return $this->render('auth/login.html.twig');
+        $this->userMapper      = $userMapper;
     }
 
     /**
      * @Route("/login", methods={"POST"}, name="login_process")
      */
-    public function loginProcess(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function login(Request $request, UserPasswordEncoderInterface $passwordEncoder): JsonResponse
     {
         if (!$this->getUser()) {
             $username = $request->get('username');
@@ -77,39 +56,27 @@ class AuthController extends AbstractController
                 throw new Exception('password is not valid');
             }
 
-            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-            $this->tokenStorage->setToken($token);
-            $this->session->set('_security_main', serialize($token));
-            $this->eventDispatcher->dispatch(new InteractiveLoginEvent($request, $token));
-
-            return $this->redirect('/');
+            return JsonResponse::create($this->userMapper->mapOne($user));
         }
 
-        return $this->redirect('/');
-    }
-
-    /**
-     * @Route("/register", methods={"GET"}, name="register_form")
-     */
-    public function registerForm(): Response
-    {
-        return $this->render('auth/register.html.twig');
+        return JsonResponse::create($this->userMapper->mapOne($this->getUser()));
     }
 
     /**
      * @Route("/register", methods={"POST"}, name="register_process")
      */
-    public function registerProcess(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $email    = $request->get('email');
         $password = $request->get('password');
         $username = $request->get('username');
 
-        $user = new User('', '', '');
-        $user = new User($email, $passwordEncoder->encodePassword($user, $password), $username);
+        $user  = new User('', '', '', '');
+        $token = md5($username . $email . mt_rand());
+        $user  = new User($email, $passwordEncoder->encodePassword($user, $password), $username, $token);
 
         $this->userRepo->save($user);
 
-        return $this->redirectToRoute('login_form');
+        return JsonResponse::create($this->userMapper->mapOne($user));
     }
 }

@@ -55,6 +55,13 @@ class User implements UserInterface
     private $role;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=32)
+     */
+    private $token;
+
+    /**
      * @var DateTimeImmutable
      *
      * @ORM\Column(type="datetime_immutable")
@@ -68,12 +75,13 @@ class User implements UserInterface
      */
     private $createdAt;
 
-    public function __construct(string $email, string $password, string $username, string $role = self::ROLE_USER)
+    public function __construct(string $email, string $password, string $username, string $token, string $role = self::ROLE_USER)
     {
         $this->email    = $email;
         $this->password = $password;
         $this->username = $username;
         $this->role     = $role;
+        $this->token    = $token;
 
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
@@ -107,5 +115,15 @@ class User implements UserInterface
     public function eraseCredentials(): bool
     {
         return true;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
     }
 }
