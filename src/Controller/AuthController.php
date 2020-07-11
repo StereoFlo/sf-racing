@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Mappers\UserMapper;
 use App\Repository\UserRepository;
 use Exception;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,10 +44,14 @@ class AuthController extends AbstractController
     public function login(Request $request, UserPasswordEncoderInterface $passwordEncoder): JsonResponse
     {
         if (!$this->getUser()) {
-            $username = $request->get('username');
+            $email    = $request->get('email');
             $password = $request->get('password');
 
-            $user = $this->userRepo->getByUsername($username);
+            if (empty($email) || empty($password)) {
+                throw new InvalidArgumentException('email and password cannot be empty');
+            }
+
+            $user = $this->userRepo->getByEmail($email);
 
             if (empty($user)) {
                 throw new Exception('user does not found');

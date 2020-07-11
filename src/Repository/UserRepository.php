@@ -29,4 +29,9 @@ class UserRepository
     {
         return $this->manager->getRepository(User::class)->findOneBy(['username' => $username]);
     }
+
+    public function getByEmail(string $email): ?User
+    {
+        return $this->manager->getRepository(User::class)->findOneBy(['email' => $email]);
+    }
 }
