@@ -45,15 +45,11 @@ class UserController extends AbstractController
      */
     public function show(): JsonResponse
     {
-        if (empty($this->security->getUser())) {
-            return $this->responder->unauthorized();
-        }
-
         /** @var User $user */
         $user = $this->getUser();
 
         if (!$user instanceof User) {
-            throw new DomainException('something is wrong');
+            throw new DomainException('something is wrong with user');
         }
 
         return $this->responder->okSingle($this->userMapper->mapOne($user));
