@@ -3,9 +3,7 @@ security:
     providers:
         users_in_memory: { memory: null }
         user:
-            entity:
-                class: App\Domain\Users\Entity\User
-                property: username
+            id: App\Infrastructure\Security\UserProvider
     encoders:
         App\Domain\Users\Entity\User:
             algorithm: auto

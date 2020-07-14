@@ -28,4 +28,3 @@ final class Version20200714082624 extends AbstractMigration
         $this->addSql('ALTER TABLE users DROP deleted_at, CHANGE token token VARCHAR(32) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }
-

@@ -8,6 +8,7 @@ use App\Common\Domain\Exception\DomainException;
 use App\Common\Domain\Exception\ModelNotFoundException;
 use App\Domain\Users\Entity\User;
 use App\Infrastructure\Repository\UserRepository;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -27,7 +28,7 @@ class UserProvider implements UserProviderInterface
     {
         $user = $this->userRepo->getByToken($token);
         if (empty($user)) {
-            throw new ModelNotFoundException();
+            throw new AccessDeniedException();
         }
 
         return $user;
