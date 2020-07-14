@@ -7,6 +7,9 @@ namespace App\Domain\Users\Entity;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use function md5;
+use function mt_rand;
+use function random_bytes;
 
 /**
  * @ORM\Entity()
@@ -90,6 +93,11 @@ class User implements UserInterface
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function updateToken(): void
+    {
+        $this->token = md5(mt_rand() . random_bytes(1000));
     }
 
     public function getRoles(): array

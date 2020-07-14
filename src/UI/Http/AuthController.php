@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace App\UI\Http;
 
-use App\Common\Domain\Exception\DomainException;
-use App\Common\Domain\Exception\ModelNotFoundException;
 use App\Common\Helper\Responder;
 use App\Common\Mapper\UserMapper;
 use App\Domain\Users\Entity\User;
+use App\Domain\Users\State\Command\LoginCommand;
+use App\Infrastructure\Dto\LoginDto;
 use App\Infrastructure\Repository\UserRepository;
-use InvalidArgumentException;
+use App\Infrastructure\State\State;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,48 +39,27 @@ class AuthController extends AbstractController
      * @var Responder
      */
     private $responder;
+    /**
+     * @var State
+     */
+    private $state;
 
-    public function __construct(UserRepository $userRepo, UserMapper $userMapper, Responder $responder)
+    public function __construct(UserRepository $userRepo, UserMapper $userMapper, Responder $responder, State $state)
     {
         $this->userRepo    = $userRepo;
         $this->userMapper  = $userMapper;
         $this->responder   = $responder;
+        $this->state       = $state;
     }
 
     /**
      * @Route("/login", methods={"POST"}, name="login_process")
      */
-    public function login(Request $request, UserPasswordEncoderInterface $passwordEncoder): JsonResponse
+    public function login(LoginDto $loginDto): JsonResponse
     {
-        if (!$this->getUser()) {
-            $email    = $request->get('email');
-            $password = $request->get('password');
+        $user = $this->state->commit(new LoginCommand($loginDto));
 
-            if (empty($email) || empty($password)) {
-                throw new InvalidArgumentException('email and password cannot be empty');
-            }
-
-            $user = $this->userRepo->getByEmail($email);
-
-            if (empty($user)) {
-                throw new ModelNotFoundException('user does not found');
-            }
-
-            if (!$passwordEncoder->isPasswordValid($user, $password)) {
-                throw new DomainException('password is not valid');
-            }
-
-            return $this->responder->okSingle($this->userMapper->mapOne($user));
-        }
-
-        /** @var User $user */
-        $user = $this->getUser();
-
-        if (!$user instanceof User) {
-            throw new DomainException('something is wrong');
-        }
-
-        return $this->responder->okSingle($this->userMapper->mapOne($user));
+        return $this->responder->okSingle($user);
     }
 
     /**

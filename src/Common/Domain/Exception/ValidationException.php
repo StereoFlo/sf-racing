@@ -17,7 +17,7 @@ final class ValidationException extends InvalidArgumentException implements Doma
     /**
      * ValidationException constructor.
      *
-     * @param array<string, string> $errors errors from constraints
+     * @param array<string, mixed> $errors errors from constraints
      */
     public function __construct(array $errors, string $message = '', int $code = 0, Throwable $previous = null)
     {
@@ -26,7 +26,7 @@ final class ValidationException extends InvalidArgumentException implements Doma
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     public function getErrors(): array
     {
