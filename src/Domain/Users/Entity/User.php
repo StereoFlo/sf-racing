@@ -14,6 +14,7 @@ use function random_bytes;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="users")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -58,9 +59,9 @@ class User implements UserInterface
     private $role;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", length=32, unique=true)
+     * @ORM\Column(type="string", length=32, unique=true, nullable=true)
      */
     private $token;
 
@@ -78,15 +79,19 @@ class User implements UserInterface
      */
     private $createdAt;
 
+    /**
+     * @var DateTimeImmutable
+     *
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $deletedAt;
+
     public function __construct(string $email, string $password, string $username, string $role = self::ROLE_USER)
     {
         $this->email    = $email;
         $this->password = $password;
         $this->username = $username;
         $this->role     = $role;
-
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): int
@@ -134,8 +139,31 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function getToken(): string
+    public function getToken(): ?string
     {
         return $this->token;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreated(): void
+    {
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function setUpdated(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
+    }
+
+    public function setDeleted(): void
+    {
+        $this->deletedAt = new DateTimeImmutable();
+        $this->token     = null;
     }
 }
