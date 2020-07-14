@@ -6,6 +6,6 @@ namespace App\Common\Domain\Exception;
 
 use Exception;
 
-final class DomainException extends Exception
+class DomainException extends Exception implements DomainExceptionInterface
 {
 }
