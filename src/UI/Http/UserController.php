@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\UI\Http;
 
 use App\Common\Domain\Exception\DomainException;
+use App\Common\Helper\Responder;
 use App\Common\Mapper\UserMapper;
 use App\Domain\Users\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,15 +22,22 @@ class UserController extends AbstractController
      * @var Security
      */
     private $security;
+
     /**
      * @var UserMapper
      */
     private $userMapper;
 
-    public function __construct(Security $security, UserMapper $userMapper)
+    /**
+     * @var Responder
+     */
+    private $responder;
+
+    public function __construct(Security $security, UserMapper $userMapper, Responder $responder)
     {
         $this->security   = $security;
         $this->userMapper = $userMapper;
+        $this->responder  = $responder;
     }
 
     /**
@@ -38,7 +46,7 @@ class UserController extends AbstractController
     public function show(): JsonResponse
     {
         if (empty($this->security->getUser())) {
-            return JsonResponse::create(['error' => 'access denied'], 403);
+            return $this->responder->unauthorized();
         }
 
         /** @var User $user */
@@ -48,6 +56,6 @@ class UserController extends AbstractController
             throw new DomainException('something is wrong');
         }
 
-        return JsonResponse::create($this->userMapper->mapOne($user));
+        return $this->responder->okSingle($this->userMapper->mapOne($user));
     }
 }

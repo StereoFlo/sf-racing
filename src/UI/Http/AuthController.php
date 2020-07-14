@@ -5,10 +5,11 @@ declare(strict_types = 1);
 namespace App\UI\Http;
 
 use App\Common\Domain\Exception\DomainException;
+use App\Common\Domain\Exception\ModelNotFoundException;
+use App\Common\Helper\Responder;
 use App\Common\Mapper\UserMapper;
 use App\Domain\Users\Entity\User;
 use App\Infrastructure\Repository\UserRepository;
-use Exception;
 use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,12 +35,16 @@ class AuthController extends AbstractController
      */
     private $userMapper;
 
-    public function __construct(
-        UserRepository $userRepo,
-        UserMapper $userMapper
-    ) {
-        $this->userRepo        = $userRepo;
-        $this->userMapper      = $userMapper;
+    /**
+     * @var Responder
+     */
+    private $responder;
+
+    public function __construct(UserRepository $userRepo, UserMapper $userMapper, Responder $responder)
+    {
+        $this->userRepo    = $userRepo;
+        $this->userMapper  = $userMapper;
+        $this->responder   = $responder;
     }
 
     /**
@@ -58,14 +63,14 @@ class AuthController extends AbstractController
             $user = $this->userRepo->getByEmail($email);
 
             if (empty($user)) {
-                throw new Exception('user does not found');
+                throw new ModelNotFoundException('user does not found');
             }
 
             if (!$passwordEncoder->isPasswordValid($user, $password)) {
-                throw new Exception('password is not valid');
+                throw new DomainException('password is not valid');
             }
 
-            return JsonResponse::create($this->userMapper->mapOne($user));
+            return $this->responder->okSingle($this->userMapper->mapOne($user));
         }
 
         /** @var User $user */
@@ -75,7 +80,7 @@ class AuthController extends AbstractController
             throw new DomainException('something is wrong');
         }
 
-        return JsonResponse::create($this->userMapper->mapOne($user));
+        return $this->responder->okSingle($this->userMapper->mapOne($user));
     }
 
     /**
@@ -93,6 +98,6 @@ class AuthController extends AbstractController
 
         $this->userRepo->save($user);
 
-        return JsonResponse::create($this->userMapper->mapOne($user));
+        return $this->responder->okSingle($this->userMapper->mapOne($user));
     }
 }
