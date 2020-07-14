@@ -65,15 +65,15 @@ final class ExceptionListener implements EventSubscriberInterface
         $e = $event->getThrowable();
 
         switch (get_class($e)) {
-            case DomainException::class:
-            case UniqueConstraintViolationException::class:
-                $response = $this->responder->badRequest($e->getMessage());
-                $this->logger->error($e->getMessage(), $e->getTrace());
-
-                break;
             case ModelNotFoundException::class:
             case NotFoundHttpException::class:
                 $response = $this->responder->notFound();
+                $this->logger->error($e->getMessage(), $e->getTrace());
+
+                break;
+            case DomainException::class:
+            case UniqueConstraintViolationException::class:
+                $response = $this->responder->badRequest($e->getMessage());
                 $this->logger->error($e->getMessage(), $e->getTrace());
 
                 break;
