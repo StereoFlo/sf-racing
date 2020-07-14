@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace App\Repository;
+namespace App\Infrastructure\Repository;
 
-use App\Entity\User;
+use App\Domain\Users\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserRepository

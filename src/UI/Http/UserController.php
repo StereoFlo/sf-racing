@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Controller;
+declare(strict_types = 1);
 
-use App\Mappers\UserMapper;
+namespace App\UI\Http;
+
+use App\Common\Domain\DomainException;
+use App\Common\Mapper\UserMapper;
+use App\Domain\Users\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class UserController
+class UserController extends AbstractController
 {
     /**
      * @var Security
@@ -20,7 +25,7 @@ class UserController
 
     public function __construct(Security $security, UserMapper $userMapper)
     {
-        $this->security = $security;
+        $this->security   = $security;
         $this->userMapper = $userMapper;
     }
 
@@ -32,6 +37,14 @@ class UserController
         if (empty($this->security->getUser())) {
             return JsonResponse::create(['error' => 'access denied'], 403);
         }
-        return JsonResponse::create($this->userMapper->mapOne($this->security->getUser()));
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw new DomainException('something is wrong');
+        }
+
+        return JsonResponse::create($this->userMapper->mapOne($user));
     }
 }

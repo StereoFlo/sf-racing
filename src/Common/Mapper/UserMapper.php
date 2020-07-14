@@ -2,18 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace App\Mappers;
+namespace App\Common\Mapper;
 
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Domain\Users\Entity\User;
 
 class UserMapper
 {
-    public function mapOne(UserInterface $user): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function mapOne(User $user): array
     {
         return $this->doMapping($user);
     }
 
-    private function doMapping(UserInterface $user): array
+    /**
+     * @return array<string, mixed>
+     */
+    private function doMapping(User $user): array
     {
         return [
             'id'       => $user->getId(),

@@ -2,21 +2,21 @@
 
 declare(strict_types = 1);
 
-namespace App\DataFixtures;
+namespace App\Infrastructure\Fixtures;
 
-use App\Entity\User;
+use App\Domain\Users\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AppFixtures extends Fixture
+class UserFixtures extends Fixture
 {
     /**
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface  $encoder)
+    public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }

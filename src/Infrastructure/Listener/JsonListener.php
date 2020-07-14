@@ -2,26 +2,21 @@
 
 declare(strict_types = 1);
 
-namespace App\Listeners;
+namespace App\Infrastructure\Listener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
+use const JSON_ERROR_NONE;
 use function json_decode;
 use function json_last_error;
 use function strpos;
 use function strtolower;
-use const JSON_ERROR_NONE;
 
 class JsonListener implements EventSubscriberInterface
 {
-    /**
-     * @var RequestEvent
-     */
-    private $event;
-
     /**
      * @var Request
      */
@@ -39,7 +34,6 @@ class JsonListener implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        $this->event   = $event;
         $this->request = $event->getRequest();
         if ($this->hasContent()) {
             $this->setRequest($this->getJsonDecoded());
