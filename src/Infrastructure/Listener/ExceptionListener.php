@@ -10,6 +10,7 @@ use App\Common\Helper\Responder;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -17,7 +18,7 @@ use Throwable;
 use function get_class;
 use function in_array;
 
-final class ExceptionListener
+final class ExceptionListener implements EventSubscriberInterface
 {
     public const DEBUG_ENVIRONMENTS = ['dev'];
 
@@ -51,7 +52,7 @@ final class ExceptionListener
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::EXCEPTION => ['onKernelException'],
+            KernelEvents::EXCEPTION => 'onKernelException',
         ];
     }
 
