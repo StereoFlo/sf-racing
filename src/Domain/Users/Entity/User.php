@@ -78,13 +78,12 @@ class User implements UserInterface
      */
     private $createdAt;
 
-    public function __construct(string $email, string $password, string $username, string $token, string $role = self::ROLE_USER)
+    public function __construct(string $email, string $password, string $username, string $role = self::ROLE_USER)
     {
         $this->email    = $email;
         $this->password = $password;
         $this->username = $username;
         $this->role     = $role;
-        $this->token    = $token;
 
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();

@@ -7,6 +7,7 @@ namespace App\Infrastructure\Listener;
 use App\Common\Domain\Exception\DomainException;
 use App\Common\Domain\Exception\ModelNotFoundException;
 use App\Common\Helper\Responder;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -64,6 +65,7 @@ final class ExceptionListener
 
         switch (get_class($e)) {
             case DomainException::class:
+            case UniqueConstraintViolationException::class:
                 $response = $this->responder->badRequest($e->getMessage());
                 $this->logger->error($e->getMessage(), $e->getTrace());
 
