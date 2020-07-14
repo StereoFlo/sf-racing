@@ -19,6 +19,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use function md5;
 use function mt_rand;
 
+/**
+ * @Route("/v1")
+ */
 class AuthController extends AbstractController
 {
     /**

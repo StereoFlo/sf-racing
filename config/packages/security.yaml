@@ -15,8 +15,16 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            provider: user
+            pattern: ^/(login/register)
             anonymous: true
+        app:
+            pattern: ^/.*
+            anonymous: false
+            stateless: true
+            provider: user
+            guard:
+                authenticators:
+                    - App\Infrastructure\Security\TokenAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
