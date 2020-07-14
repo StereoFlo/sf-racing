@@ -6,6 +6,7 @@ namespace App\Infrastructure\Listener;
 
 use App\Common\Domain\Exception\DomainException;
 use App\Common\Domain\Exception\ModelNotFoundException;
+use App\Common\Domain\Exception\ValidationException;
 use App\Common\Helper\Responder;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Psr\Log\LoggerInterface;
@@ -65,6 +66,11 @@ final class ExceptionListener implements EventSubscriberInterface
         $e = $event->getThrowable();
 
         switch (get_class($e)) {
+            case ValidationException::class:
+                $response = $this->responder->validationFailed($e->getErrors());
+                $this->logger->error($e->getMessage(), $e->getTrace());
+
+                break;
             case ModelNotFoundException::class:
             case NotFoundHttpException::class:
                 $response = $this->responder->notFound();
