@@ -4,10 +4,10 @@ security:
         users_in_memory: { memory: null }
         user:
             entity:
-                class: App\Entity\User
+                class: App\Domain\Users\Entity\User
                 property: username
     encoders:
-        App\Entity\User:
+        App\Domain\Users\Entity\User:
             algorithm: auto
 
     firewalls:
