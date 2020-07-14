@@ -34,4 +34,14 @@ class UserRepository
     {
         return $this->manager->getRepository(User::class)->findOneBy(['email' => $email]);
     }
+
+    public function getByToken(string $token): ?User
+    {
+        return $this->manager->getRepository(User::class)->findOneBy(['token' => $token]);
+    }
+
+    public function getById(int $id): ?User
+    {
+        return $this->manager->getRepository(User::class)->findOneBy(['id' => $id]);
+    }
 }

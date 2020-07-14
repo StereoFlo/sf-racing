@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\UI\Http;
 
-use App\Common\Domain\DomainException;
+use App\Common\Domain\Exception\DomainException;
 use App\Common\Mapper\UserMapper;
 use App\Domain\Users\Entity\User;
 use App\Infrastructure\Repository\UserRepository;
