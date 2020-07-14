@@ -13,10 +13,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: ^/(login/register)
+            pattern: ^/v1/(login|register)
             anonymous: true
         app:
-            pattern: ^/.*
+            pattern: ^/v1/.*
             anonymous: false
             stateless: true
             provider: user
