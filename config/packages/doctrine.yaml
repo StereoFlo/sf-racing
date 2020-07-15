@@ -16,3 +16,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Users/Entity'
                 prefix: 'App\Domain\Users\Entity\User'
                 alias: User
+            News:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/News/Entity'
+                prefix: 'App\Domain\News\Entity\News'
+                alias: News

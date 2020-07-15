@@ -5,20 +5,9 @@ declare(strict_types = 1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Users\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 
-class UserRepository
+final class UserRepository extends AbstractRepository
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $manager;
-
-    public function __construct(EntityManagerInterface $manager)
-    {
-        $this->manager = $manager;
-    }
-
     public function save(User $user): void
     {
         $this->manager->persist($user);

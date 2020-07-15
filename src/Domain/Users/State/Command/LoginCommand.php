@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Domain\Users\State\Command;
 
 use App\Common\Domain\State\CommandInterface;
-use App\Infrastructure\Dto\LoginDto;
+use App\Infrastructure\Dto\Request\Auth\LoginDto;
 
 final class LoginCommand implements CommandInterface
 {
