@@ -56,10 +56,15 @@ class News extends AbstractEntity
     public function __construct(User $author, string $title, string $content, bool $isShowAuthorized = false)
     {
         $this->author           = $author;
+        $this->update($title, $content, $isShowAuthorized);
+        $this->setCreated();
+    }
+
+    public function update(string $title, string $content, bool $isShowAuthorized = false): void
+    {
         $this->title            = $title;
         $this->content          = $content;
         $this->isShowAuthorized = $isShowAuthorized;
-        $this->setCreated();
     }
 
     public function getId(): int

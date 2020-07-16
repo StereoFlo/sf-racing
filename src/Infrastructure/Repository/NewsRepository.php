@@ -16,6 +16,11 @@ final class NewsRepository extends AbstractRepository
         $this->manager->flush();
     }
 
+    public function getById(int $id): ?News
+    {
+        return $this->manager->getRepository(News::class)->find($id);
+    }
+
     /**
      * @return News[]
      */
