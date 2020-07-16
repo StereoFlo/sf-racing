@@ -47,7 +47,7 @@ final class LoginHandler implements MessageHandlerInterface
         }
 
         if ($user->getDeletedAt()) {
-            throw new ModelNotFoundException('user is banned');
+            throw new DomainException('user is banned');
         }
 
         if (!$this->passwordEncoder->isPasswordValid($user, $loginCommand->getLoginDto()->getPassword())) {
