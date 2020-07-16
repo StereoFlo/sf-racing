@@ -13,7 +13,7 @@ use App\Infrastructure\Repository\NewsRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Security\Core\Security;
 
-class NewsCreateHandler implements MessageHandlerInterface
+final class NewsCreateHandler implements MessageHandlerInterface
 {
     /**
      * @var NewsRepository

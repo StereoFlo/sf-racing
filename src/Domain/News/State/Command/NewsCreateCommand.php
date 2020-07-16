@@ -7,7 +7,7 @@ namespace App\Domain\News\State\Command;
 use App\Common\Domain\State\CommandInterface;
 use App\Infrastructure\Dto\Request\News\NewsDto;
 
-class NewsCreateCommand implements CommandInterface
+final class NewsCreateCommand implements CommandInterface
 {
     /**
      * @var NewsDto
