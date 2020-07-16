@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Common\Mapper;
 
 use App\Domain\News\Entity\News;
+use function array_map;
 
 final class NewsMapper
 {
@@ -31,5 +32,15 @@ final class NewsMapper
             'created_at' => $news->getCreatedAt(),
             'updated_at' => $news->getUpdatedAt(),
         ];
+    }
+
+    /**
+     * @param News[] $news
+     *
+     * @return array<array<string, mixed>>
+     */
+    public function mapCollection(array $news): array
+    {
+        return array_map([$this, 'map'], $news);
     }
 }

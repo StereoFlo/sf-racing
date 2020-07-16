@@ -6,7 +6,9 @@ namespace App\UI\Http\Admin;
 
 use App\Common\Helper\Responder;
 use App\Domain\News\State\Command\NewsCreateCommand;
+use App\Domain\Users\State\Query\NewsListQuery;
 use App\Infrastructure\Dto\Request\News\NewsDto;
+use App\Infrastructure\Dto\Request\News\NewsListDto;
 use App\Infrastructure\State\State;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,5 +42,15 @@ final class NewsController
         $news = $this->state->commit(new NewsCreateCommand($newsDto));
 
         return $this->responder->okSingle($news);
+    }
+
+    /**
+     * @Route("/news", methods={"GET"})
+     */
+    public function getList(NewsListDto $newsListDto): JsonResponse
+    {
+        $newsList = $this->state->query(new NewsListQuery($newsListDto));
+
+        return $this->responder->okCollection($newsList['items'], $newsList['total'], $newsListDto->getLimit(), $newsListDto->getOffset());
     }
 }
