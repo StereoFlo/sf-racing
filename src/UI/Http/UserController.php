@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Security;
 /**
  * @Route("/v1")
  */
-class UserController extends AbstractController
+final class UserController extends AbstractController
 {
     /**
      * @var Security

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/v1")
  */
-class AuthController extends AbstractController
+final class AuthController extends AbstractController
 {
     /**
      * @var Responder
