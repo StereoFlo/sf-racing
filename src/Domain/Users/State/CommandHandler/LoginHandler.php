@@ -58,6 +58,6 @@ final class LoginHandler implements MessageHandlerInterface
 
         $this->userRepo->save($user);
 
-        return $this->userMapper->mapOne($user);
+        return $this->userMapper->mapOne($user, true);
     }
 }

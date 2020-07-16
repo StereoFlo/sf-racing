@@ -11,22 +11,19 @@ class UserMapper
     /**
      * @return array<string, mixed>
      */
-    public function mapOne(User $user): array
+    public function mapOne(User $user, bool $isLogin = false): array
     {
-        return $this->doMapping($user);
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function doMapping(User $user): array
-    {
-        return [
+        $res = [
             'id'       => $user->getId(),
             'email'    => $user->getEmail(),
             'username' => $user->getUsername(),
             'roles'    => $user->getRoles(),
-            'token'    => $user->getToken(),
         ];
+
+        if ($isLogin) {
+            $res['token'] = $user->getToken();
+        }
+
+        return $res;
     }
 }
