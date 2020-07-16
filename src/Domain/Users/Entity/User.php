@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Domain\Users\Entity;
 
+use App\Common\Domain\Entity\AbstractEntity;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,7 +17,7 @@ use function random_bytes;
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks()
  */
-class User implements UserInterface
+class User extends AbstractEntity implements UserInterface
 {
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_USER  = 'ROLE_USER';
@@ -64,20 +65,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=32, unique=true, nullable=true)
      */
     private $token;
-
-    /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $updatedAt;
-
-    /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
 
     /**
      * @var DateTimeImmutable
@@ -142,23 +129,6 @@ class User implements UserInterface
     public function getToken(): ?string
     {
         return $this->token;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreated(): void
-    {
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdated(): void
-    {
-        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function setDeleted(): void
