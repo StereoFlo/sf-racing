@@ -67,7 +67,7 @@ class User extends AbstractEntity implements UserInterface
     private $token;
 
     /**
-     * @var DateTimeImmutable
+     * @var DateTimeImmutable|null
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
@@ -135,5 +135,10 @@ class User extends AbstractEntity implements UserInterface
     {
         $this->deletedAt = new DateTimeImmutable();
         $this->token     = null;
+    }
+
+    public function getDeletedAt(): ?DateTimeImmutable
+    {
+        return $this->deletedAt;
     }
 }
