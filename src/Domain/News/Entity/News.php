@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Domain\News\Entity;
 
+use App\Common\Domain\Entity\AbstractEntity;
 use App\Domain\Users\Entity\User;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-class News
+class News extends AbstractEntity
 {
     /**
      * @var int
@@ -51,20 +52,6 @@ class News
      * @ORM\Column(type="boolean", options={"default": 0})
      */
     private $isShowAuthorized;
-
-    /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTimeImmutable
-     *
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $updatedAt;
 
     public function __construct(User $author, string $title, string $content, bool $isShowAuthorized = false)
     {
@@ -108,22 +95,5 @@ class News
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setUpdated(): void
-    {
-        $this->updatedAt = new DateTimeImmutable();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setCreated(): void
-    {
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
     }
 }
