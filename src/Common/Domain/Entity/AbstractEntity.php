@@ -61,7 +61,7 @@ abstract class AbstractEntity
         return $this->updatedAt;
     }
 
-    public function format(?DateTimeImmutable $dateTimeImmutable, string $format = 'Y-m-d H:i:s'): ?string
+    public function formatDateToString(?DateTimeImmutable $dateTimeImmutable, string $format = 'Y-m-d H:i:s'): ?string
     {
         if (empty($dateTimeImmutable)) {
             return null;

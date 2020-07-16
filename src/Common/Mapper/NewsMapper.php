@@ -29,8 +29,8 @@ final class NewsMapper
             'title'      => $news->getTitle(),
             'content'    => $news->getContent(),
             'author'     => $this->userMapper->mapOne($news->getAuthor()),
-            'created_at' => $news->format($news->getCreatedAt()),
-            'updated_at' => $news->format($news->getUpdatedAt()),
+            'created_at' => $news->formatDateToString($news->getCreatedAt()),
+            'updated_at' => $news->formatDateToString($news->getUpdatedAt()),
         ];
     }
 
