@@ -72,6 +72,7 @@ class News
         $this->title            = $title;
         $this->content          = $content;
         $this->isShowAuthorized = $isShowAuthorized;
+        $this->setCreated();
     }
 
     public function getId(): int

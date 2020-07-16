@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\UI\Http;
+namespace App\UI\Http\Admin;
 
 use App\Common\Helper\Responder;
 use App\Domain\News\State\Command\NewsCreateCommand;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/v1")
+ * @Route("/v1/admin")
  */
 final class NewsController
 {
