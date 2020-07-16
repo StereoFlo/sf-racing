@@ -56,7 +56,7 @@ final class NewsController
     }
 
     /**
-     * @Route("/news/{id}", requirements={"id":"\d+"},, methods={"PATCH"})
+     * @Route("/news/{id}", requirements={"id":"\d+"}, methods={"PATCH"})
      */
     public function edit(NewsDto $newsDto, int $id): JsonResponse
     {
