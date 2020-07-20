@@ -22,3 +22,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/News/Entity'
                 prefix: 'App\Domain\News\Entity\News'
                 alias: News
+            Event:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Events/Entity'
+                prefix: 'App\Domain\Events\Entity\Event'
+                alias: Event

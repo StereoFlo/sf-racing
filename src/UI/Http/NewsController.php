@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\UI\Http;
 
@@ -16,10 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class NewsController
 {
-
     /**
-    * @var State
-    */
+     * @var State
+     */
     private $state;
 
     /**
