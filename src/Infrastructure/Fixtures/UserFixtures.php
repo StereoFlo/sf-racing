@@ -26,10 +26,12 @@ class UserFixtures extends Fixture
         $admin = new User('admin@admin.admin', '', 'admin', User::ROLE_ADMIN);
         $admin->setPassword($this->encoder->encodePassword($admin, 'admin'));
         $admin->updateToken();
+        $this->addReference('admin', $admin);
 
         $user = new User('user@user.user', '', 'user', User::ROLE_USER);
         $user->setPassword($this->encoder->encodePassword($user, 'admin'));
         $user->updateToken();
+        $this->addReference('user', $user);
 
         $manager->persist($admin);
         $manager->persist($user);
