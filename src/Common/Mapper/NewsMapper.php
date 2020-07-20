@@ -25,12 +25,13 @@ final class NewsMapper
     public function map(News $news): array
     {
         return [
-            'id'         => $news->getId(),
-            'title'      => $news->getTitle(),
-            'content'    => $news->getContent(),
-            'author'     => $this->userMapper->mapOne($news->getAuthor()),
-            'created_at' => $news->formatDateToString($news->getCreatedAt()),
-            'updated_at' => $news->formatDateToString($news->getUpdatedAt()),
+            'id'                 => $news->getId(),
+            'title'              => $news->getTitle(),
+            'content'            => $news->getContent(),
+            'author'             => $this->userMapper->mapOne($news->getAuthor()),
+            'is_show_authorized' => $news->isShowAuthorized(),
+            'created_at'         => $news->formatDateToString($news->getCreatedAt()),
+            'updated_at'         => $news->formatDateToString($news->getUpdatedAt()),
         ];
     }
 
