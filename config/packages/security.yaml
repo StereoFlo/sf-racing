@@ -15,6 +15,9 @@ security:
         main:
             pattern: ^/v1/(login|register)
             anonymous: true
+        туцы:
+            pattern: ^/v1/news
+            anonymous: true
         app:
             pattern: ^/v1/.*
             anonymous: false

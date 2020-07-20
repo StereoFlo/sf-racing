@@ -1,0 +1,36 @@
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%_all.log"
+            level: debug
+            channels: ["!event", '!doctrine', '!console', '!php', "!security", "!request", "!messenger"]
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event", "!console"]
+        doctrine:
+            path: "%kernel.logs_dir%/%kernel.environment%_doctrine.log"
+            type: stream
+            level: debug
+            channels: ["doctrine"]
+        php:
+            path: "%kernel.logs_dir%/%kernel.environment%_php.log"
+            type: stream
+            level: debug
+            channels: ["php"]
+        security:
+            path: "%kernel.logs_dir%/%kernel.environment%_security.log"
+            type: stream
+            level: info
+            channels: ["security"]
+        request:
+            path: "%kernel.logs_dir%/%kernel.environment%_request.log"
+            type: stream
+            level: info
+            channels: ["request"]
+        messenger:
+            path: "%kernel.logs_dir%/%kernel.environment%_messenger.log"
+            type: stream
+            level: info
+            channels: ["messenger"]
