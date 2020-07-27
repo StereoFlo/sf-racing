@@ -17,7 +17,7 @@ use function random_bytes;
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks()
  */
-class User extends AbstractEntity implements UserInterface
+final class User extends AbstractEntity implements UserInterface
 {
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_USER  = 'ROLE_USER';

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-class News extends AbstractEntity
+final class News extends AbstractEntity
 {
     /**
      * @var int
