@@ -11,24 +11,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class LoginDto implements RequestDtoInterface
 {
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $email;
+    private string $email;
 
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      */
-    private $password;
+    private string $password;
 
     public function __construct(Request $request)
     {
-        $this->email    = $request->get('email');
-        $this->password = $request->get('password');
+        $this->email    = $request->get('email', '');
+        $this->password = $request->get('password', '');
     }
 
     public function getEmail(): string

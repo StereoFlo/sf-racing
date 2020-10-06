@@ -24,15 +24,9 @@ final class State implements StateInterface
 {
     use HandleTrait;
 
-    /**
-     * @var MessageBusInterface
-     */
-    private $bus;
+    private MessageBusInterface $bus;
 
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
+    private ValidatorInterface $validator;
 
     public function __construct(MessageBusInterface $bus, ValidatorInterface $validator)
     {

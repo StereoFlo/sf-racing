@@ -9,7 +9,7 @@ final class HandlerCommonException extends DomainException
     /**
      * @var array<array<int, string>>
      */
-    private $exceptions;
+    private array $exceptions;
 
     /**
      * @param array<array<int, string>> $exceptions

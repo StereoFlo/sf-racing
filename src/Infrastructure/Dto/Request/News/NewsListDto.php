@@ -11,18 +11,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class NewsListDto implements RequestDtoInterface
 {
     /**
-     * @var int
-     *
      * @Assert\Type(type="integer")
      */
-    private $limit;
+    private int $limit;
 
     /**
-     * @var int
-     *
      * @Assert\Type(type="integer")
      */
-    private $offset;
+    private int $offset;
 
     public function __construct(Request $request)
     {

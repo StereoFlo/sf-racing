@@ -12,14 +12,10 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class NewsEditHandler implements MessageHandlerInterface
 {
-    /**
-     * @var NewsRepository
-     */
-    private $newsRepo;
-    /**
-     * @var NewsMapper
-     */
-    private $newsMapper;
+
+    private NewsRepository $newsRepo;
+
+    private NewsMapper $newsMapper;
 
     public function __construct(NewsRepository $newsRepo, NewsMapper $newsMapper)
     {

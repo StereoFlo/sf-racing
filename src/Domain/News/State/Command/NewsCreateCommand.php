@@ -9,10 +9,7 @@ use App\Infrastructure\Dto\Request\News\NewsDto;
 
 final class NewsCreateCommand implements CommandInterface
 {
-    /**
-     * @var NewsDto
-     */
-    private $newsDto;
+    private NewsDto $newsDto;
 
     public function __construct(NewsDto $newsDto)
     {

@@ -15,19 +15,11 @@ use Symfony\Component\Security\Core\Security;
 
 final class NewsCreateHandler implements MessageHandlerInterface
 {
-    /**
-     * @var NewsRepository
-     */
-    private $newsRepo;
+    private NewsRepository $newsRepo;
 
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var NewsMapper
-     */
-    private $newsMapper;
+    private User $user;
+
+    private NewsMapper $newsMapper;
 
     public function __construct(NewsRepository $newsRepo, Security $security, NewsMapper $newsMapper)
     {

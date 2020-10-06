@@ -25,20 +25,12 @@ final class ExceptionListener implements EventSubscriberInterface
 
     /**
      * current environment of app.
-     *
-     * @var string
      */
-    private $environment;
+    private string $environment;
 
-    /**
-     * @var Responder
-     */
-    private $responder;
+    private Responder $responder;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(string $environment, Responder $responder, LoggerInterface $logger)
     {

@@ -18,20 +18,11 @@ use Symfony\Component\Security\Core\Security;
  */
 final class UserController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
+    private Security $security;
 
-    /**
-     * @var UserMapper
-     */
-    private $userMapper;
+    private UserMapper $userMapper;
 
-    /**
-     * @var Responder
-     */
-    private $responder;
+    private Responder $responder;
 
     public function __construct(Security $security, UserMapper $userMapper, Responder $responder)
     {

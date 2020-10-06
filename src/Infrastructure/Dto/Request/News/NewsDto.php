@@ -11,19 +11,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class NewsDto implements RequestDtoInterface
 {
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      * @Assert\Length(min="5", max="250")
      */
-    private $title;
+    private string $title;
 
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      */
-    private $content;
+    private string $content;
 
     /**
      * @var bool
@@ -34,8 +30,8 @@ final class NewsDto implements RequestDtoInterface
 
     public function __construct(Request $request)
     {
-        $this->title            = $request->get('title');
-        $this->content          = $request->get('content');
+        $this->title            = $request->get('title', '');
+        $this->content          = $request->get('content', '');
         $this->isShowAuthorized = $request->get('is_show_authorized', false);
     }
 

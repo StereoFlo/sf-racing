@@ -19,15 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class NewsController
 {
-    /**
-     * @var State
-     */
-    private $state;
+    private State $state;
 
-    /**
-     * @var Responder
-     */
-    private $responder;
+    private Responder $responder;
 
     public function __construct(State $state, Responder $responder)
     {

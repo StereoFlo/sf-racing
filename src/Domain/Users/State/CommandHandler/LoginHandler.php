@@ -14,19 +14,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 final class LoginHandler implements MessageHandlerInterface
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
-    /**
-     * @var UserRepository
-     */
-    private $userRepo;
+    private UserPasswordEncoderInterface $passwordEncoder;
 
-    /**
-     * @var UserMapper
-     */
-    private $userMapper;
+    private UserRepository $userRepo;
+
+    private UserMapper $userMapper;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepo, UserMapper $userMapper)
     {

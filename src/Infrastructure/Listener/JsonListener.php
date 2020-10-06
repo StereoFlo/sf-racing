@@ -17,10 +17,7 @@ use function strtolower;
 
 class JsonListener implements EventSubscriberInterface
 {
-    /**
-     * @var Request
-     */
-    private $request;
+    private Request $request;
 
     /**
      * {@inheritdoc}

@@ -9,10 +9,7 @@ use App\Infrastructure\Dto\Request\News\NewsListDto;
 
 final class NewsListQuery implements QueryInterface
 {
-    /**
-     * @var NewsListDto
-     */
-    private $newsListDto;
+    private NewsListDto $newsListDto;
 
     public function __construct(NewsListDto $newsListDto)
     {

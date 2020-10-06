@@ -13,45 +13,35 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-final class News extends AbstractEntity
+class News extends AbstractEntity
 {
     /**
-     * @var int
-     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned":true})
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var User
-     *
      * @ORM\ManyToOne(targetEntity="App\Domain\Users\Entity\User")
      * @ORM\JoinColumn(name="autor_id", referencedColumnName="id")
      */
-    private $author;
+    private User $author;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=250)
      */
-    private $title;
+    private string $title;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      */
-    private $content;
+    private string $content;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", options={"default": 0})
      */
-    private $isShowAuthorized;
+    private bool $isShowAuthorized;
 
     public function __construct(User $author, string $title, string $content, bool $isShowAuthorized = false)
     {

@@ -17,61 +17,47 @@ use function random_bytes;
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks()
  */
-final class User extends AbstractEntity implements UserInterface
+class User extends AbstractEntity implements UserInterface
 {
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_USER  = 'ROLE_USER';
 
     /**
-     * @var int
-     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned":true})
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=150, unique=true)
      */
-    private $email;
+    private string $email;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      */
-    private $password;
+    private string $password;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
-    private $username;
+    private string $username;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=20)
      */
-    private $role;
+    private string $role;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", length=32, unique=true, nullable=true)
      */
-    private $token;
+    private ?string $token;
 
     /**
-     * @var DateTimeImmutable|null
-     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $deletedAt;
+    private ?DateTimeImmutable $deletedAt;
 
     public function __construct(string $email, string $password, string $username, string $role = self::ROLE_USER)
     {

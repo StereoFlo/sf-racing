@@ -20,14 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class AuthController extends AbstractController
 {
-    /**
-     * @var Responder
-     */
-    private $responder;
-    /**
-     * @var State
-     */
-    private $state;
+    private Responder $responder;
+
+    private State $state;
 
     public function __construct(Responder $responder, State $state)
     {

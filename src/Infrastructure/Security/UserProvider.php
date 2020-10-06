@@ -12,12 +12,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class UserProvider implements UserProviderInterface
+final class UserProvider implements UserProviderInterface
 {
-    /**
-     * @var UserRepository
-     */
-    private $userRepo;
+    private UserRepository $userRepo;
 
     public function __construct(UserRepository $userRepo)
     {

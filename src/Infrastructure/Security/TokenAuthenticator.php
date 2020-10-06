@@ -14,12 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
-class TokenAuthenticator extends AbstractGuardAuthenticator
+final class TokenAuthenticator extends AbstractGuardAuthenticator
 {
-    /**
-     * @var Responder
-     */
-    private $responder;
+    private Responder $responder;
 
     public function __construct(Responder $responder)
     {

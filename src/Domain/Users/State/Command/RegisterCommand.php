@@ -9,10 +9,7 @@ use App\Infrastructure\Dto\Request\Auth\RegisterDto;
 
 final class RegisterCommand implements CommandInterface
 {
-    /**
-     * @var RegisterDto
-     */
-    private $registerDto;
+    private RegisterDto $registerDto;
 
     public function __construct(RegisterDto $registerDto)
     {

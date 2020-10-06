@@ -11,18 +11,14 @@ use Exception;
 abstract class AbstractEntity
 {
     /**
-     * @var DateTimeImmutable
-     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    protected $createdAt;
+    protected DateTimeImmutable $createdAt;
 
     /**
-     * @var DateTimeImmutable
-     *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    protected $updatedAt;
+    protected DateTimeImmutable $updatedAt;
 
     /**
      * @ORM\PrePersist()

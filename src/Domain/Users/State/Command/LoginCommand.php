@@ -9,10 +9,7 @@ use App\Infrastructure\Dto\Request\Auth\LoginDto;
 
 final class LoginCommand implements CommandInterface
 {
-    /**
-     * @var LoginDto
-     */
-    private $loginDto;
+    private LoginDto $loginDto;
 
     public function __construct(LoginDto $loginDto)
     {

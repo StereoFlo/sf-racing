@@ -11,16 +11,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class NewsEditCommand implements CommandInterface
 {
     /**
-     * @var int
-     *
      * @Assert\NotBlank()
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var NewsDto
+     * @var
      */
-    private $newsDto;
+    private NewsDto $newsDto;
 
     public function __construct(int $id, NewsDto $newsDto)
     {

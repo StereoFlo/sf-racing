@@ -12,34 +12,29 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
-final class Event extends AbstractEntity
+class Event extends AbstractEntity
 {
     /**
-     * @var int
-     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var User
-     *
      * @ORM\ManyToOne(targetEntity="App\Domain\Users\Entity\User")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
-    private $createdBy;
+    private User $createdBy;
 
     public function __construct(string $name, User $createdBy)
     {
+        $this->id        = 0;
         $this->name      = $name;
         $this->createdBy = $createdBy;
     }

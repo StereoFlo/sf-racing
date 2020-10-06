@@ -14,15 +14,9 @@ final class NewsListHandler implements MessageHandlerInterface
 {
     use HandlerListTrait;
 
-    /**
-     * @var NewsRepository
-     */
-    private $newsRepo;
+    private NewsRepository $newsRepo;
 
-    /**
-     * @var NewsMapper
-     */
-    private $newsMapper;
+    private NewsMapper $newsMapper;
 
     public function __construct(NewsRepository $newsRepo, NewsMapper $newsMapper)
     {
