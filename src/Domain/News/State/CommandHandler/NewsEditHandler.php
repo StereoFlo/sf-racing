@@ -12,7 +12,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class NewsEditHandler implements MessageHandlerInterface
 {
-
     private NewsRepository $newsRepo;
 
     private NewsMapper $newsMapper;
